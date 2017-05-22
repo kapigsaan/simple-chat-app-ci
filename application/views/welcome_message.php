@@ -4,24 +4,91 @@
     <meta charset="utf-8">
     <title>Welcome to CodeIgniter</title>
 
-    <link rel="stylesheet" type="text/css" href="<?php base_url();?>assets/css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="<?php base_url();?>assets/css/style.css"> -->
 
-    <link rel="stylesheet" type="text/css" href="<?php base_url();?>assets/css/bootstrap.css">
+    <!-- <link rel="stylesheet" type="text/css" href="<?php base_url();?>assets/css/bootstrap.css"> -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
+<style type="text/css">
+	.chat
+	{
+	    list-style: none;
+	    margin: 0;
+	    padding: 0;
+	}
+
+	.chat li
+	{
+	    margin-bottom: 10px;
+	    padding-bottom: 5px;
+	    border-bottom: 1px dotted #B3A9A9;
+	}
+
+	.chat li.left .chat-body
+	{
+	    margin-left: 60px;
+	}
+
+	.chat li.right .chat-body
+	{
+	    margin-right: 60px;
+	}
+
+
+	.chat li .chat-body p
+	{
+	    margin: 0;
+	    color: #777777;
+	}
+
+	.panel .slidedown .glyphicon, .chat .glyphicon
+	{
+	    margin-right: 5px;
+	}
+
+	.panel-body
+	{
+	    overflow-y: scroll;
+	    height: 250px;
+	}
+
+	::-webkit-scrollbar-track
+	{
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	    background-color: #F5F5F5;
+	}
+
+	::-webkit-scrollbar
+	{
+	    width: 12px;
+	    background-color: #F5F5F5;
+	}
+
+	::-webkit-scrollbar-thumb
+	{
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	    background-color: #555;
+	}
+</style>
+
 <div class="container">
     <br/>
+    <div class = "row text-center">
+    	<h1>Simple Chat App</h1>
+    </div>
     <hr/>
-    <br/>
     <div class="row">
-        <div class = "col-md-3"></div>
+        <div class = "col-md-3 text-center">
+        	<a href="<?php echo base_url('index.php/welcome/changeUser/1')?>" class = "btn btn-primary btn-lg" disabled>USER 1</a>
+        </div>
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <span class="glyphicon glyphicon-comment"></span> Chat <?php echo $userId?>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-chevron-down"></span>
@@ -30,7 +97,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel-body" style="height:500px;">
+                <div class="panel-body" style="height:350px;">
                     <ul class="chat">
                         <?php if ($messages) { ?>
                             <?php foreach($messages as $message) {?>
@@ -68,7 +135,9 @@
                 </div>
             </div>
         </div>
-        <div class = "col-md-3"></div>
+        <div class = "col-md-3 text-center">
+        	<a href="<?php echo base_url('index.php/welcome/changeUser/2')?>" class = "btn btn-success btn-lg">USER 2</a>
+        </div>
     </div>
 </div>
 
