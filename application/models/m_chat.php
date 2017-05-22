@@ -15,6 +15,19 @@ class M_chat extends CI_Model {
 		return $query->result();
 	}
 
+	public function getAllByUser($userId)
+	{
+		$sql = '
+			SELECT 
+				*
+			FROM message
+			WHERE user = ?
+		';
+
+		$query = $this->db->query($sql, array($userId));
+
+		return $query->result();
+	}
 
 	/*
 	/ @param $message - chat

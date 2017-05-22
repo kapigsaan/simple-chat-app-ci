@@ -9,11 +9,10 @@ class Welcome extends CI_Controller {
 		$this->load->model('m_chat');
 	}
 
-	public function index()
+	public function index($userId = 1)
 	{
-		$data['messages'] = $this->m_chat->getAll();
+		$data['messages'] = $this->m_chat->getAllByUser($userId);
 		$this->load->view('welcome_message', $data);
-
 	}
 
 	public function createMessage()
