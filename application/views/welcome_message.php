@@ -137,6 +137,8 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+    	
+    	$('#panel-body-1').scrollTop($('#panel-body-1')[0].scrollHeight);
 
         $(".sendMessage").on('click', function(e){
             e.preventDefault();
@@ -203,7 +205,7 @@
                alert('request failed');
             }
         });
-        scroll();
+        
     }
 
 </script>
