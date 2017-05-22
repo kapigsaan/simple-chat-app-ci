@@ -79,7 +79,11 @@
     <hr/>
     <div class="row">
         <div class = "col-md-3 text-center">
-        	<a href="<?php echo base_url('welcome/changeUser/1')?>" class = "btn btn-primary btn-lg" disabled>USER 1</a>
+        	<a href="<?php echo site_url('welcome/changeUser/1')?>" class = "btn btn-primary btn-lg" 
+        	<?php if($activeUser == 2):?>
+        		disabled
+        	<?php endif; ?>
+        	>USER 1</a>
         </div>
         <div class="col-md-6">
             <div class="panel panel-primary">
@@ -103,12 +107,11 @@
                                     </span>
                                         <div class="chat-body clearfix">
                                             <div class="header">
-                                                <strong class="primary-font">User 1</strong> <small class="pull-right text-muted">
-                                                    <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                                <strong class="primary-font">User <?php echo $message->user?></strong> <small class="pull-right text-muted">
+                                                    <span class="glyphicon glyphicon-time"></span><?php echo date('F d H:i',strtotime($message->created_at));?></small>
                                             </div>
                                             <p>
                                                 <?=$message->message?>
-                                                <?=$message->id?>
                                             </p>
                                         </div>
                                     </li>
@@ -119,12 +122,11 @@
                                     </span>
                                         <div class="chat-body clearfix">
                                             <div class="header">
-                                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
-                                                <strong class="pull-right primary-font">User 2</strong>
+                                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span><?php echo date('F d H:i',strtotime($message->created_at));?></small>
+                                                <strong class="pull-right primary-font">User <?php echo $message->user?></strong>
                                             </div>
                                             <p>
                                                 <?=$message->message?>
-                                                <?=$message->id?>
                                             </p>
                                         </div>
                                     </li>
@@ -151,7 +153,11 @@
             </div>
         </div>
         <div class = "col-md-3 text-center">
-        	<a href="<?php echo base_url('welcome/changeUser/2')?>" class = "btn btn-success btn-lg">USER 2</a>
+        	<a href="<?php echo site_url('welcome/changeUser/2')?>" class = "btn btn-success btn-lg"
+        	<?php if($activeUser == 1):?>
+        		disabled
+        	<?php endif; ?>
+        	>USER 2</a>
         </div>
     </div>
 </div>
