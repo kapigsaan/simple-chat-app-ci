@@ -17,9 +17,13 @@ class Welcome extends CI_Controller {
 		}else{
 			$data['messages'] = $this->m_chat->getConversation(1,$userId);
 		}
-		
-
 		$this->load->view('welcome_message', $data);
+	}
+
+	public function changeUser($userId = 1)
+	{
+		redirect('/welcome/index/'.$userId);
+
 	}
 
 	public function createMessage()
