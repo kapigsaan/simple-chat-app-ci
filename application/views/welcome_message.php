@@ -154,6 +154,8 @@
                      data: {message: message},
                      success:function(data){
                         console.log(data);
+                        var elem = document.getElementById('panel-body-1');
+	  					elem.scrollTop = elem.scrollHeight;
                      },
                      error: function(xhr, status, errorThrown){
                         console.log(errorThrown);
@@ -187,8 +189,6 @@
                 console.log(data['messages']);
                 $(".panel-body .chat").html('');
                 $(".panel-body .chat").append(data['messages']);
-                var elem = document.getElementById('panel-body-1');
-	  			elem.scrollTop = elem.scrollHeight;
              },
              error: function(xhr, status, errorThrown){
                 console.log(errorThrown);
