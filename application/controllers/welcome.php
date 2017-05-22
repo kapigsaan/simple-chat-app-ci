@@ -26,12 +26,12 @@ class Welcome extends CI_Controller {
 
 	}
 
-	public function createMessage()
+	public function createMessage($userId = 1)
 	{
 		$data['message'] = $this->input->post('message');
 		$date = date('Y-m-d H:i:s');
 		$data['created_at'] = $date;
-
+		$data['user'] = $userId;
 		$ret = $this->m_chat->createMessage($data);
 
 		echo json_encode('success');

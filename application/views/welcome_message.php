@@ -79,7 +79,7 @@
     <hr/>
     <div class="row">
         <div class = "col-md-3 text-center">
-        	<a href="<?php echo base_url('index.php/welcome/changeUser/1')?>" class = "btn btn-primary btn-lg" disabled>USER 1</a>
+        	<a href="<?php echo base_url('welcome/changeUser/1')?>" class = "btn btn-primary btn-lg" disabled>USER 1</a>
         </div>
         <div class="col-md-6">
             <div class="panel panel-primary">
@@ -151,7 +151,7 @@
             </div>
         </div>
         <div class = "col-md-3 text-center">
-        	<a href="<?php echo base_url('index.php/welcome/changeUser/2')?>" class = "btn btn-success btn-lg">USER 2</a>
+        	<a href="<?php echo base_url('welcome/changeUser/2')?>" class = "btn btn-success btn-lg">USER 2</a>
         </div>
     </div>
 </div>
@@ -175,7 +175,7 @@
 
                  $.ajax({
                      type: "POST",
-                     url: "index.php/welcome/createMessage",
+                     url: "<?php echo site_url('welcome/createMessage/'.$activeUser) ?>",
                      dataType: 'json',
                      data: {message: message},
                      success:function(data){
