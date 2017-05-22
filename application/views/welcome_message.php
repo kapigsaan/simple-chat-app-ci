@@ -137,6 +137,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
+
         $(".sendMessage").on('click', function(e){
             e.preventDefault();
             var message = $(".message").val();
@@ -154,8 +155,7 @@
                      data: {message: message},
                      success:function(data){
                         console.log(data);
-                        var elem = document.getElementById('panel-body-1');
-	  					elem.scrollTop = elem.scrollHeight;
+                        scroll();
                      },
                      error: function(xhr, status, errorThrown){
                         console.log(errorThrown);
@@ -171,6 +171,11 @@
 
 
     });
+
+    function scroll(){
+    	var elem = document.getElementById('panel-body-1');
+	  	elem.scrollTop = elem.scrollHeight;
+    }
 
     getMessages();
     setInterval(getMessages, 500);
@@ -198,7 +203,7 @@
                alert('request failed');
             }
         });
-
+        scroll();
     }
 
 </script>
