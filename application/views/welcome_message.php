@@ -97,7 +97,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel-body" style="height:350px;">
+                <div id = "panel-body-1" class="panel-body" style="height:350px;">
                     <ul class="chat">
 
                     </ul>
@@ -172,6 +172,12 @@
 
     getMessages();
     setInterval(getMessages, 500);
+
+    window.setInterval(function() {
+	  var elem = document.getElementById('panel-body-1');
+	  elem.scrollTop = elem.scrollHeight;
+	}, 500);
+
     function getMessages()
     {
         // 1. get data database
