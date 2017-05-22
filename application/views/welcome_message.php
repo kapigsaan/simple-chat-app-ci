@@ -11,7 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-
+<a href = "<?php echo site_url()?>">user swtch</a>
 <div class="container">
     <br/>
     <hr/>
@@ -33,20 +33,40 @@
                 <div class="panel-body" style="height:500px;">
                     <ul class="chat">
                         <?php if ($messages) { ?>
+                            <?php echo $activeUser ?>
                             <?php foreach($messages as $message) {?>
-                                <li class="left clearfix"><span class="chat-img pull-left">
-                                    <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                                </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong> <small class="pull-right text-muted">
-                                                <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                <?php if ($message->user == $activeUser) { ?>
+                                    <li class="left clearfix"><span class="chat-img pull-left">
+                                        <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                        <div class="chat-body clearfix">
+                                            <div class="header">
+                                                <strong class="primary-font">User 1</strong> <small class="pull-right text-muted">
+                                                    <span class="glyphicon glyphicon-time"></span>12 mins ago</small>
+                                            </div>
+                                            <p>
+                                                <?=$message->message?>
+                                                <?=$message->id?>
+                                            </p>
                                         </div>
-                                        <p>
-                                            <?=$message->message?>
-                                        </p>
-                                    </div>
-                                </li>
+                                    </li>
+                                <?php }else{ ?>
+
+                                    <li class="right clearfix"><span class="chat-img pull-right">
+                                        <img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="User Avatar" class="img-circle" />
+                                    </span>
+                                        <div class="chat-body clearfix">
+                                            <div class="header">
+                                                <small class=" text-muted"><span class="glyphicon glyphicon-time"></span>13 mins ago</small>
+                                                <strong class="pull-right primary-font">User 2</strong>
+                                            </div>
+                                            <p>
+                                                <?=$message->message?>
+                                                <?=$message->id?>
+                                            </p>
+                                        </div>
+                                    </li>
+                                <?php } ?>
                             <?php } ?>
                         <?php } ?>
                     </ul>

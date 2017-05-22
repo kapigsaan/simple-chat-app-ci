@@ -29,6 +29,21 @@ class M_chat extends CI_Model {
 		return $query->result();
 	}
 
+	public function getConversation($firstUserId, $secondUserId)
+	{
+		$sql = '
+			SELECT 
+				*
+			FROM message
+			WHERE user IN (?, ?)
+			ORDER BY created_at ASC
+		';
+
+		$query = $this->db->query($sql, array($firstUserId, $secondUserId));
+
+		return $query->result();
+	}
+
 	/*
 	/ @param $message - chat
 	/
