@@ -26,6 +26,20 @@ class Welcome extends CI_Controller {
 
 	}
 
+	public function getConversation($userId = 1){
+		$data['activeUser'] = $userId;
+		if ($userId = 1){
+			$data['messages'] = $this->m_chat->getConversation($userId,2);	
+		}else{
+			$data['messages'] = $this->m_chat->getConversation(1,$userId);
+		}
+		$theHTMLResponse    = $this->load->view('conversations', $data, true);
+
+		$this->output->set_content_type('application/json');
+		$this->output->set_output(json_encode(array('messages'=> $theHTMLResponse)));
+
+	}
+
 	public function createMessage($userId = 1)
 	{
 		$data['message'] = $this->input->post('message');
