@@ -173,11 +173,6 @@
     getMessages();
     setInterval(getMessages, 500);
 
-    window.setInterval(function() {
-	  var elem = document.getElementById('panel-body-1');
-	  elem.scrollTop = elem.scrollHeight;
-	}, 500);
-
     function getMessages()
     {
         // 1. get data database
@@ -192,6 +187,8 @@
                 console.log(data['messages']);
                 $(".panel-body .chat").html('');
                 $(".panel-body .chat").append(data['messages']);
+                var elem = document.getElementById('panel-body-1');
+	  			elem.scrollTop = elem.scrollHeight;
              },
              error: function(xhr, status, errorThrown){
                 console.log(errorThrown);
