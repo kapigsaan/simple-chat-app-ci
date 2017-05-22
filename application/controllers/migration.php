@@ -8,12 +8,12 @@ class Migration extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function index()
+	public function index($id = 2)
 	{
 
         $this->load->library('migration');
 
-        if ( ! $this->migration->version(1))
+        if ( ! $this->migration->version($id))
         {
             echo 'Error' . $this->migration->error_string();
         } else {

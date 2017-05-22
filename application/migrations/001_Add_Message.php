@@ -5,7 +5,6 @@ class Migration_Add_Message extends CI_Migration {
 
 	public function up()
 	{
-		$this->dbforge->create_database('chatApp_db');
 
 		$this->dbforge->add_field(array(
 			'id' => array(
