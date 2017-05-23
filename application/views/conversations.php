@@ -1,4 +1,4 @@
-<?php if ($room) { ?>
+<?php if ($activeRoom) { ?>
 <?php if ($messages) { ?>
 <?php foreach($messages as $message) {?>
     <?php if ($message->user == $activeUser) { ?>
