@@ -25,16 +25,11 @@
             <?php foreach ($conversations as $conversation) { ?>
                 <tr>
                     <td><?php echo $conversation->name?></td>
-                    <td><?php echo $conversation->fullname?></td>
-                    <td><a href = ""><span class="glyphicon glyphicon-eye-open"></span></a></td>
+                    <td><?php echo $conversation->username?></td>
+                    <td><a href = "<?php echo site_url('admin/viewConversation/'.$conversation->id) ?>"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                   </tr>
             <?php } ?>
-            
-            <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td><a href = ""><span class="glyphicon glyphicon-eye-open"></span></a></td>
-              </tr>
+
         </tbody>
       </table>
     </div>

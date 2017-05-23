@@ -75,4 +75,38 @@ class M_chat_room extends CI_Model
         return $this->db->delete('chat_room_members');
     }
 
+    public function getRoomWithConversation($roomId)
+    {
+        $sql = '
+            SELECT
+                *
+            FROM chat_room
+            WHERE id = ? 
+            ';
+
+        $query = $this->db->query($sql, array($roomId));
+        $room = $query->row();
+        $data = array();
+
+        
+        $data[$room->id]['room'] = $room;
+        $data[$room->id]['conversation'] = $this->getConversation($room->id);
+
+        return $data;   
+    }
+
+    public function getConversation($roomId)
+    {
+        $sql = '
+            SELECT
+                *
+            FROM chat_room_members
+            WHERE chat_room = ? 
+        ';
+
+        $query = $this->db->query($sql, array($roomId));
+        
+        return $query->result();
+    }
+
 }

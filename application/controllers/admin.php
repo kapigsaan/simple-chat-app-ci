@@ -12,14 +12,15 @@ class Admin extends CI_Controller {
 	public function home()
 	{
 		$data['conversations'] = $this->m_chat_room->getAll();
+		
 		$this->load->view('adminhome', $data);
 
 	}
 
 	public function viewConversation($conversation_id)
 	{
-		// $data['convesation'] = $this->m_chat_room->get($conversation_id);
-		$data = false;
+		$data['conversation'] = $this->m_chat_room->getRoomWithConversation($conversation_id);
+		
 		$this->load->view('admin_show_conversation', $data);
 	}
 }
