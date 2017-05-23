@@ -14,8 +14,10 @@ class Migration_Add_Message extends CI_Migration {
 				'auto_increment' => TRUE
 			),
 			'user' => array(
-				'type' => 'VARCHAR',
-				'constraint' => '100',
+				'type' => 'BIGINT',
+			),
+			'room_id' => array(
+				'type' => 'BIGINT',
 			),
 			'message' => array(
 				'type' => 'TEXT',
