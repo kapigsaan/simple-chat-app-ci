@@ -314,11 +314,7 @@
 </html>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-
-    	$('#panel-body-1').scrollTop($('#panel-body-1')[0].scrollHeight);
-
-        $(".sendMessage").on('click', function(e){
+    $(".sendMessage").on('click', function(e){
             e.preventDefault();
             var message = $(".message").val();
             var html = '<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">User</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>12 mins ago</small></div><p>'+message+'.</p></div></li>';
@@ -348,6 +344,11 @@
 
             }
         });
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    	$('#panel-body-1').scrollTop($('#panel-body-1')[0].scrollHeight);
 
 
     });
@@ -391,6 +392,9 @@
         $('#example').DataTable();
     } );
 
+
+</script>
+<script type="text/javascript">
     $('#radioBtn a').on('click', function(){
         var sel = $(this).data('title');
         var tog = $(this).data('toggle');
@@ -399,5 +403,4 @@
         $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
         $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
     })
-
 </script>
