@@ -55,7 +55,7 @@ class M_chat_room extends CI_Model
         $rooms = $query->result();
         $data = [];
         foreach ($rooms as $key => $v) {
-            $sql = 'SELECT c.*,u.username
+            $sql = 'SELECT c.*,u.username,u.id as userId
                  from chat_room_members c
                  LEFT JOIN user u on c.member = u.id
                  where chat_room = '.$v->id.'
@@ -68,9 +68,10 @@ class M_chat_room extends CI_Model
 
     }
 
-    public function kickMember($userId = FALSE)
+    public function kickMember($userId = FALSE, $roomId = FALSE)
     {
         $this->db->where('member', $userId);
+        $this->db->where('chat_room', $roomId);
         return $this->db->delete('chat_room_members');
     }
 

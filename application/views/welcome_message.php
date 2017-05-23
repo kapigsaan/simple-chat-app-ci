@@ -189,7 +189,7 @@
                                         </button>
                                         <ul class="dropdown-menu slidedown">
                                             <li>
-                                                <a href="<?php echo site_url('welcome/kickMember/'.$e->id.'/'.$room->id)?>" >
+                                                <a href="<?php echo site_url('welcome/kickMember/'.$e->userId.'/'.$room->id)?>" >
                                                   <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Kick Member
                                                 </a>
                                             </li>

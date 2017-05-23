@@ -67,7 +67,7 @@ class Welcome extends CI_Controller {
 
 	public function kickMember($userId = false, $roomId = false)
 	{
-		$ret = $this->m_chat_room->kickMember($userId);
+		$ret = $this->m_chat_room->kickMember($userId, $roomId);
 		
 		if ($ret) {
 			
