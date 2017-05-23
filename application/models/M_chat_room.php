@@ -20,7 +20,7 @@ class M_chat_room extends CI_Model
     {
     	$sql = '
     		SELECT 
-    			*
+    			cr.*,u.username, u.id as userId
     		FROM chat_room cr
     		LEFT JOIN user u
     		ON cr.owner = u.id
@@ -29,7 +29,7 @@ class M_chat_room extends CI_Model
 
     	$query = $this->db->query($sql, array($room_id));
 
-    	return $query->result();
+    	return $query->row();
 
     }
 

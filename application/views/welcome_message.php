@@ -176,10 +176,15 @@
                                   <?php echo $room->name ?>
                                 </a>
 
-                                <a href = "<?php echo site_url('welcome/index/'.$room->id) ?>">GO daw</a>
+                                <a href = "<?php echo site_url('welcome/index/'.$room->id) ?>" style = "float: right">
+                                    <span class = "glyphicon glyphicon-share-alt"></span>
+                                </a>
                               </h4>
                             </div>
-                            <div id="collapse<?php echo $room->id?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $room->id?>">
+                            <div id="collapse<?php echo $room->id?>" class="panel-collapse collapse 
+                                <?php if ($activeRoom->id == $room->id): ?>
+                                    in
+                                <?php endif ?>" role="tabpanel" aria-labelledby="heading<?php echo $room->id?>">
                               <div class="panel-body">
                                 <?php if ($member): ?>
                                     <?php foreach ($member as $y => $e):?>
@@ -291,7 +296,7 @@
                     <?php foreach ($availableUser as $user) : ?>
                         <tr>
                             <td><?php echo $user->username ?> </td>
-                            <td><a href="<?php echo site_url('user/addUserToRoom/'.$user->id).'/'.$room->id ?>" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
+                            <td><a href="<?php echo site_url('user/addUserToRoom/'.$user->id).'/'.$activeRoom->id ?>" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

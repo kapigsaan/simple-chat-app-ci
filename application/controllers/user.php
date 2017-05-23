@@ -17,6 +17,6 @@ class User extends CI_Controller {
 		
 		$this->m_chat_room->addChatRoomMember($data);
 
-		redirect('welcome/index');
+		redirect('welcome/index/'.$roomId);
 	}
 }
