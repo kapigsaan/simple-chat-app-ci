@@ -61,4 +61,10 @@ class M_chat_room extends CI_Model
 
     }
 
+    public function kickMember($userId = FALSE)
+    {
+        $this->db->where('member', $userId);
+        return $this->db->delete('chat_room_members');
+    }
+
 }

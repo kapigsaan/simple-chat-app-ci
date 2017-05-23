@@ -61,5 +61,17 @@ class Welcome extends CI_Controller {
 			redirect('/welcome/index/'.$userId);
 		}
 	}
+
+	public function kickMember($userId = false, $roomId = false)
+	{
+		$ret = $this->m_chat_room->kickMember($userId);
+		
+		if ($ret) {
+			
+		}
+
+		redirect('/welcome/index/'.$roomId);
+
+	}
 	
 }
