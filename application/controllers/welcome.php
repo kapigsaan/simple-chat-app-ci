@@ -7,16 +7,20 @@ class Welcome extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('m_chat');
+		$this->load->model('m_chat_room');
 	}
 
 	public function index($userId = 1)
 	{
+		
 		$data['activeUser'] = $userId;
 		if ($userId = 1){
 			$data['messages'] = $this->m_chat->getConversation($userId,2);	
 		}else{
 			$data['messages'] = $this->m_chat->getConversation(1,$userId);
 		}
+		$rooms = $this->m_chat_room->getAllRoom();
+		$data['rooms'] = $rooms;
 		$this->load->view('welcome_message', $data);
 	}
 
@@ -49,6 +53,25 @@ class Welcome extends CI_Controller {
 		$ret = $this->m_chat->createMessage($data);
 
 		echo json_encode('success');
+	}
+
+	public function addRoom()
+	{
+		if ($this->input->post()) {
+			$data['name'] = $this->input->post('room-name');
+			$data['status'] = $this->input->post('happy');
+			$date = date('Y-m-d H:i:s');
+			$data['created_at'] = $date;
+			// $data['owner'] = $this->session->user_data('user_id');
+
+			$ret = $this->m_chat_room->createRoom($data);
+
+			if ($ret) {
+				
+			}
+
+			redirect('/welcome/index/'.$userId);
+		}
 	}
 	
 }
