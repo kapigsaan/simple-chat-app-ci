@@ -314,6 +314,38 @@
 </html>
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        getMessages();
+        setInterval(getMessages, 500);
+
+    function getMessages()
+    {
+        // 1. get data database
+        // 2. reappend everything
+        // 3. refreshed
+
+        $.ajax({
+             type: "GET",
+             url: "<?php echo site_url('welcome/getConversation/'.$activeRoomId) ?>",
+             dataType: 'json',
+             success:function(data){
+                console.log(data['messages']);
+                $(".panel-body .chat").html('');
+                $(".panel-body .chat").append(data['messages']);
+             },
+             error: function(xhr, status, errorThrown){
+                console.log(errorThrown);
+                console.log(status);
+                console.log(xhr);
+               console.log(arguments);
+               alert('request failed');
+            }
+        });
+        
+    }
+    });
+</script>
+<script type="text/javascript">
     $(".sendMessage").on('click', function(e){
             e.preventDefault();
             var message = $(".message").val();
@@ -358,34 +390,7 @@
 	  	elem.scrollTop = elem.scrollHeight;
     }
 
-    getMessages();
-    setInterval(getMessages, 500);
 
-    function getMessages()
-    {
-        // 1. get data database
-        // 2. reappend everything
-        // 3. refreshed
-
-        $.ajax({
-             type: "GET",
-             url: "<?php echo site_url('welcome/getConversation/'.$activeUser) ?>",
-             dataType: 'json',
-             success:function(data){
-                console.log(data['messages']);
-                $(".panel-body .chat").html('');
-                $(".panel-body .chat").append(data['messages']);
-             },
-             error: function(xhr, status, errorThrown){
-                console.log(errorThrown);
-                console.log(status);
-                console.log(xhr);
-               console.log(arguments);
-               alert('request failed');
-            }
-        });
-        
-    }
     //data tables
 
     $(document).ready(function() {

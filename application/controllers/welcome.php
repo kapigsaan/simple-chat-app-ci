@@ -24,7 +24,7 @@ class Welcome extends CI_Controller {
 	}
 
 	public function getConversation($roomId=false){
-		$data['room'] = $this->m_chat_room->get($roomId);
+		$data['activeRoom'] = $this->m_chat_room->get($roomId);
 		$this->output->set_content_type('application/json');
 		$this->output->set_output(json_encode(array('messages'=> $theHTMLResponse)));
 
