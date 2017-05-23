@@ -8,6 +8,7 @@ class Welcome extends CI_Controller {
 		parent::__construct();
 		$this->load->model('m_chat');
 		$this->load->model('m_chat_room');
+		$this->load->model('m_user');
 	}
 
 	public function index($roomId=false)
@@ -15,7 +16,9 @@ class Welcome extends CI_Controller {
 		$rooms = $this->m_chat_room->getAllRoom();
 		$room = $this->m_chat_room->get($roomId);
 		$data['rooms'] = $rooms;
-		$data['room'] = $room;
+		$data['activeRoom'] = $room;
+		$data['availableUser'] = $this->m_user->getAvailableUserInRoom($roomId);
+
 		$this->load->view('welcome_message', $data);
 	}
 

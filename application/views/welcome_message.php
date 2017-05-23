@@ -197,7 +197,7 @@
 
         </div>
         <div class="col-md-9">
-            <div class="panel panel-default">
+            <div class="panel panel-default" <?php if (!$activeRoom) { echo 'hidden';} ?> >
                 <div class="panel-heading">
                     <span class="glyphicon glyphicon-comment"></span> Chat
                     <div class="btn-group pull-right">
@@ -265,37 +265,23 @@
             <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
+                        <th>username</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Office</th>
-                        <th>Age</th>
+                        <th>username</th>
                         <th>Action</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>63</td>
-                        <td><a href="javascript:;" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td><a href="javascript:;" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
-                    </tr>
+                    <?php foreach ($availableUser as $user) : ?>
+                        <tr>
+                            <td><?php echo $user->username ?> </td>
+                            <td><a href="<?php echo site_url('user/addUserToRoom/'.$user->id).'/'.$room->id ?>" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

@@ -41,6 +41,13 @@ class M_chat_room extends CI_Model
 
     }
 
+    public function addChatRoomMember($data)
+    {
+        $this->db->insert('chat_room_members', $data);
+
+        return $this->db->insert_id();
+    }
+
     public function getAllRoom()
     {
         $query = $this->db->get('chat_room');
