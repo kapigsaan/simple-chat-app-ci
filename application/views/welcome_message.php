@@ -182,7 +182,7 @@
                               </h4>
                             </div>
                             <div id="collapse<?php echo $room->id?>" class="panel-collapse collapse 
-                                <?php if ($activeRoom->id == $room->id): ?>
+                                <?php if ($activeRoomId == $room->id): ?>
                                     in
                                 <?php endif ?>" role="tabpanel" aria-labelledby="heading<?php echo $room->id?>">
                               <div class="panel-body">
@@ -296,7 +296,7 @@
                     <?php foreach ($availableUser as $user) : ?>
                         <tr>
                             <td><?php echo $user->username ?> </td>
-                            <td><a href="<?php echo site_url('user/addUserToRoom/'.$user->id).'/'.$activeRoom->id ?>" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
+                            <td><a href="<?php echo site_url('user/addUserToRoom/'.$user->id).'/'.$activeRoomId ?>" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -330,7 +330,7 @@
 
                  $.ajax({
                      type: "POST",
-                     url: "<?php echo site_url('welcome/createMessage/'.$activeUser) ?>",
+                     url: "<?php echo site_url('welcome/createMessage/1/'.$activeRoomId) ?>",
                      dataType: 'json',
                      data: {message: message},
                      success:function(data){

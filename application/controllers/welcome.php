@@ -17,15 +17,10 @@ class Welcome extends CI_Controller {
 		$room = $this->m_chat_room->get($roomId);
 		$data['rooms'] = $rooms;
 		$data['activeRoom'] = $room;
+		$data['activeRoomId'] = $room?$room->id:0;
 		$data['availableUser'] = $this->m_user->getAvailableUserInRoom($roomId);
 
 		$this->load->view('welcome_message', $data);
-	}
-
-	public function changeUser($userId = 1)
-	{
-		redirect('/welcome/index/'.$userId);
-
 	}
 
 	public function getConversation($roomId=false){
@@ -35,12 +30,13 @@ class Welcome extends CI_Controller {
 
 	}
 
-	public function createMessage($userId = 1)
+	public function createMessage($userId = false, $roomId = false)
 	{
 		$data['message'] = $this->input->post('message');
 		$date = date('Y-m-d H:i:s');
 		$data['created_at'] = $date;
 		$data['user'] = $userId;
+		$data['room_id'] = $roomId;
 		$ret = $this->m_chat->createMessage($data);
 
 		echo json_encode('success');
