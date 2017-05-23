@@ -143,8 +143,18 @@
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                   <div class="panel-body">
-                    <p>test &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
-                    <p>test &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
+                    <div class="btn-group pull-left">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li>
+                                <a href="javascript:;" >
+                                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Kick Member
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                     <p>test &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
                   </div>
                 </div>
