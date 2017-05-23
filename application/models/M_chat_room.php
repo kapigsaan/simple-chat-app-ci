@@ -24,11 +24,12 @@ class M_chat_room extends CI_Model
     		FROM chat_room cr
     		LEFT JOIN user u
     		ON cr.owner = u.id
+    		WHERE cr.id = ?
     	';
 
-    	$query = $this->db->query($sql);
+    	$query = $this->db->query($sql, array($room_id));
 
     	return $query->result();
-    	
+
     }
 }

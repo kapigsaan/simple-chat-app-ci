@@ -17,7 +17,7 @@
   <hr/>
   <br/>
     <div class="row">
-      <div class = "col-md-3"></div>
+      <div class = "col-md-3"><a href = "<?php echo site_url('admin/home') ?>" class = "btn btn-success">Go Back</a></div>
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
