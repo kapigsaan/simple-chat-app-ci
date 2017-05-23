@@ -32,4 +32,33 @@ class M_chat_room extends CI_Model
     	return $query->result();
 
     }
+
+    public function createRoom($data = FALSE){
+
+        $this->db->insert('chat_room', $data);
+
+        return $this->db->insert_id();
+
+    }
+
+    public function getAllRoom()
+    {
+        $query = $this->db->get('chat_room');
+
+        $rooms = $query->result();
+        $data = [];
+        foreach ($rooms as $key => $v) {
+            $sql = 'SELECT c.*,u.username
+                 from chat_room_members c
+                 LEFT JOIN user u on c.member = u.id
+                 where chat_room = '.$v->id.'
+            ';
+            $data[$v->id]['room'] = $v;
+            $data[$v->id]['room-members'] = $this->db->query($sql)->result();
+        }
+        
+        return $data;
+
+    }
+
 }

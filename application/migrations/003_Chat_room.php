@@ -20,6 +20,10 @@ class Migration_Chat_room extends CI_Migration {
 				'type' => 'TEXT',
 				'null' => TRUE,
 			),
+			'status' => array(
+				'type' => 'VARCHAR',
+				'constraint' => 100,
+			),
 			'created_at' => array(
 				'type' => 'DATETIME',
 			),

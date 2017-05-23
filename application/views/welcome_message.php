@@ -83,6 +83,10 @@
       border-radius: 50px;
       float: right;
     }
+    #radioBtn .notActive{
+        color: #3276b1;
+        background-color: #fff;
+    }
 </style>
 
 <nav class="navbar navbar-default">
@@ -120,73 +124,72 @@
                 <a href="javascript:;" class="btn btn-default btn-md" id = "add-room">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Room
                 </a>
-                <div id = "add-room-input" hidden>
-                    <form>
-                        <input class = "form-control" type="text" name="room" placeholder="Room Name">
-                        <div class="btn-group">
-                            <input type="submit" class = " btn btn-default" name="Add" value = "Add">
-                            <a href="javascript:;" id = "add-room-cancel" class = " btn btn-default">Cancel</a>
+                <div class="panel-group" id = "add-room-input" hidden>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Add Room</div>
+                        <div class="panel-body">
+                            <form action ="<?php echo site_url('welcome/addRoom')?>" method = "POST">
+                                <input class = "form-control" type="text" name="room-name" placeholder="Room Name" required="required"><br/>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div id="radioBtn" class="btn-group">
+                                            <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="public">Public</a>
+                                            <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="private">Private</a>
+                                        </div>
+                                        <input type="hidden" name="happy" id="happy" value="public">
+                                    </div>
+                                </div><br/>
+                                <input type="submit" class = "btn btn-default" name="Add" value = "Add">
+                                <a href="javascript:;" id = "add-room-cancel" class = " btn btn-default">Cancel</a>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
 
             <h2>Rooms</h2>
+            
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingOne">
-                  <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                      Room #1
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                  <div class="panel-body">
-                    <div class="btn-group pull-left">
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </button>
-                        <ul class="dropdown-menu slidedown">
-                            <li>
-                                <a href="javascript:;" >
-                                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Kick Member
+
+                <?php if ($rooms): ?>
+                    <?php foreach ($rooms as $key => $v) :?>
+                        <?php 
+                            $room = $v['room'];
+                            $member = $v['room-members'];
+                        ?>
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="heading<?php echo $room->id?>">
+                              <h4 class="panel-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $room->id?>" aria-expanded="false" aria-controls="collapse<?php echo $room->id?>">
+                                  <?php echo $room->name ?>
                                 </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <p>test &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
-                  </div>
-                </div>
-                </div>
-                <div class="panel panel-default">
-                <div class="panel-heading" role="tab" id="headingTwo">
-                  <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                      Room #2
-                    </a>
-                  </h4>
-                </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                  <div class="panel-body">
-                    <p>test sdfdsf &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
-                  </div>
-                </div>
-            </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading" role="tab" id="headingThree">
-                      <h4 class="panel-title">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                          Room #3
-                        </a>
-                      </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                      <div class="panel-body">
-                        <p>test &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
-                      </div>
-                    </div>
-                </div>
+                              </h4>
+                            </div>
+                            <div id="collapse<?php echo $room->id?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $room->id?>">
+                              <div class="panel-body">
+                                <?php if ($member): ?>
+                                    <?php foreach ($member as $y => $e):?>
+                                        <div class="btn-group pull-left">
+                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                            <span class="glyphicon glyphicon-chevron-down"></span>
+                                        </button>
+                                        <ul class="dropdown-menu slidedown">
+                                            <li>
+                                                <a href="javascript:;" >
+                                                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Kick Member
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <p><?php echo $e->username ?> &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
+                                    <?php endforeach; ?>
+                                <?php endif ?>
+                              </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif ?>
+
             </div>
 
 
@@ -395,5 +398,14 @@
     $(document).ready(function() {
         $('#example').DataTable();
     } );
+
+    $('#radioBtn a').on('click', function(){
+        var sel = $(this).data('title');
+        var tog = $(this).data('toggle');
+        $('#'+tog).prop('value', sel);
+        
+        $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+        $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+    })
 
 </script>
