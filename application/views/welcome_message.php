@@ -10,6 +10,18 @@
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
 
+    <script type="text/javascript">
+         $(document).ready(function(){
+            $('#add-room').on('click', function(){
+                $('#add-room-input').show();
+                $('#add-room').hide();
+            });
+            $('#add-room-cancel').on('click', function(){
+                $('#add-room-input').hide();
+                $('#add-room').show();
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -288,7 +300,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-default">Save changes</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -369,18 +380,6 @@
         });
         
     }
-
-    $(document).ready(function(){
-        $('#add-room').on('click', function(){
-            $('#add-room-input').show();
-            $('#add-room').hide();
-        });
-        $('#add-room-cancel').on('click', function(){
-            $('#add-room-input').hide();
-            $('#add-room').show();
-        });
-    });
-
     //data tables
 
     $(document).ready(function() {
