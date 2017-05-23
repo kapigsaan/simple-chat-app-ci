@@ -1,3 +1,4 @@
+<?php if ($room) { ?>
 <?php if ($messages) { ?>
 <?php foreach($messages as $message) {?>
     <?php if ($message->user == $activeUser) { ?>
@@ -30,5 +31,6 @@
             </div>
         </li>
     <?php } ?>
+<?php } ?>
 <?php } ?>
 <?php } ?>

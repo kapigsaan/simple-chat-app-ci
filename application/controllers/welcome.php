@@ -10,17 +10,12 @@ class Welcome extends CI_Controller {
 		$this->load->model('m_chat_room');
 	}
 
-	public function index($userId = 1)
+	public function index($roomId=false)
 	{
-		
-		$data['activeUser'] = $userId;
-		if ($userId = 1){
-			$data['messages'] = $this->m_chat->getConversation($userId,2);	
-		}else{
-			$data['messages'] = $this->m_chat->getConversation(1,$userId);
-		}
 		$rooms = $this->m_chat_room->getAllRoom();
+		$room = $this->m_chat_room->get($roomId);
 		$data['rooms'] = $rooms;
+		$data['room'] = $room;
 		$this->load->view('welcome_message', $data);
 	}
 
@@ -30,15 +25,8 @@ class Welcome extends CI_Controller {
 
 	}
 
-	public function getConversation($userId = 1){
-		$data['activeUser'] = $userId;
-		if ($userId = 1){
-			$data['messages'] = $this->m_chat->getConversation($userId,2);	
-		}else{
-			$data['messages'] = $this->m_chat->getConversation(1,$userId);
-		}
-		$theHTMLResponse    = $this->load->view('conversations', $data, true);
-
+	public function getConversation($roomId=false){
+		$data['room'] = $this->m_chat_room->get($roomId);
 		$this->output->set_content_type('application/json');
 		$this->output->set_output(json_encode(array('messages'=> $theHTMLResponse)));
 

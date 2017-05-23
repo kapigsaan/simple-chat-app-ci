@@ -163,6 +163,8 @@
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $room->id?>" aria-expanded="false" aria-controls="collapse<?php echo $room->id?>">
                                   <?php echo $room->name ?>
                                 </a>
+
+                                <a href = "<?php echo site_url('welcome/index/'.$room->id) ?>">GO daw</a>
                               </h4>
                             </div>
                             <div id="collapse<?php echo $room->id?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $room->id?>">
