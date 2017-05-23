@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Welcome to CodeIgniter</title>
+    <title>Welcome to Chat App</title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -79,11 +79,24 @@
     <hr/>
     <div class="row">
         <div class = "col-md-3 text-center">
-        	<a href="<?php echo site_url('welcome/changeUser/1')?>" class = "btn btn-primary btn-lg" 
-        	<?php if($activeUser == 2):?>
-        		disabled
-        	<?php endif; ?>
-        	>USER 1</a>
+        	<h2>Rooms</h2>
+        	<ul class="list-group">
+				<li class="list-group-item active">Room 1
+					<span class="badge badge-default badge-pill">14</span>
+				</li>
+				<li class="list-group-item">Room 2
+					<span class="badge badge-default badge-pill">14</span>
+				</li>
+				<li class="list-group-item">Room 3
+					<span class="badge badge-default badge-pill">14</span>
+				</li>
+				<li class="list-group-item">Room 4
+					<span class="badge badge-default badge-pill">14</span>
+				</li>
+				<li class="list-group-item">Room 5
+					<span class="badge badge-default badge-pill">14</span>
+				</li>
+			</ul>
         </div>
         <div class="col-md-6">
             <div class="panel panel-primary">
@@ -121,11 +134,29 @@
             </div>
         </div>
         <div class = "col-md-3 text-center">
+        	<h2>Members</h2>
+        	<ul class="list-group">
+			  <li class="list-group-item justify-content-between">
+			    User 1
+			  </li>
+			  <li class="list-group-item justify-content-between">
+			    User 2
+			  </li>
+			  <li class="list-group-item justify-content-between">
+			    User 3
+			  </li>
+			</ul>
+
+			<a href="<?php echo site_url('welcome/changeUser/1')?>" class = "btn btn-success btn-lg" 
+        	<?php if($activeUser == 2):?>
+        		disabled
+        	<?php endif; ?>
+        	>USER 1</a><br/>
         	<a href="<?php echo site_url('welcome/changeUser/2')?>" class = "btn btn-success btn-lg"
         	<?php if($activeUser == 1):?>
         		disabled
         	<?php endif; ?>
-        	>USER 2</a>
+        	>USER 2</a><br/>
         </div>
     </div>
 </div>
@@ -137,7 +168,7 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-    	
+
     	$('#panel-body-1').scrollTop($('#panel-body-1')[0].scrollHeight);
 
         $(".sendMessage").on('click', function(e){

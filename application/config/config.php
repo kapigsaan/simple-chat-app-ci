@@ -23,7 +23,9 @@
 |
 */
 $root = "http://".$_SERVER['HTTP_HOST'];
-$root .= dirname($_SERVER['SCRIPT_NAME']);
+// $root .= dirname($_SERVER['SCRIPT_NAME']);
+// var_dump(dirname($_SERVER['SCRIPT_NAME']));
+// die('xx');
 $config['base_url'] = $root;
 
 /*
