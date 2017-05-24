@@ -88,20 +88,33 @@ class M_chat_room extends CI_Model
         $room = $query->row();
         $data = array();
 
-        
         $data[$room->id]['room'] = $room;
-        $data[$room->id]['conversation'] = $this->getConversation($room->id);
+        $data[$room->id]['room-users'] = $this->getUserConversations($room->id);
+        $data[$room->id]['room-users-user-id'] = $this->getUserConversationsIds($room->id);
 
         return $data;   
     }
 
-    public function getConversation($roomId)
+    public function getUserConversationsIds($roomId)
+    {
+        $users = array();
+        $userConversation = $this->getUserConversations($roomId);
+
+        foreach ($userConversation as $converse) {
+            $users[$converse->member] = $converse->member;
+        }
+
+        return $users;
+    }
+
+    public function getUserConversations($roomId)
     {
         $sql = '
-            SELECT
-                *
-            FROM chat_room_members
-            WHERE chat_room = ? 
+            SELECT 
+                c.*,u.username,u.id as userId
+            FROM chat_room_members c
+            LEFT JOIN user u on c.member = u.id
+            WHERE chat_room = ?  
         ';
 
         $query = $this->db->query($sql, array($roomId));

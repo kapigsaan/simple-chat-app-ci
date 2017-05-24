@@ -7,6 +7,7 @@ class Admin extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('m_chat_room');
+		$this->load->model('m_chat');
 	}
 
 	public function home()
@@ -20,6 +21,10 @@ class Admin extends CI_Controller {
 	public function viewConversation($conversation_id)
 	{
 		$data['conversation'] = $this->m_chat_room->getRoomWithConversation($conversation_id);
+		$data['roomId'] = $conversation_id;
+		$s = $data['getAllUserMessage'] = function($users)use($conversation_id){
+			return $this->m_chat->getAllRoomMessagesByUsers($conversation_id, $users);
+		};
 		
 		$this->load->view('admin_show_conversation', $data);
 	}

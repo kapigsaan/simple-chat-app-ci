@@ -316,7 +316,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         getMessages();
-        setInterval(getMessages, 500);
+        setInterval(getMessages, 2000);
 
     function getMessages()
     {
