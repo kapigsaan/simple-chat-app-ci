@@ -29,21 +29,6 @@ class M_chat extends CI_Model {
 		return $query->result();
 	}
 
-	public function getAllRoomMessagesByUsers($roomId, $users)
-	{
-		$query = $this->db
-		     ->select( '*' )
-		     ->from( 'message')
-		     ->where( 'room_id', $roomId )
-		     ->where_in( 'user', $users )
-		     ->order_by('created_at', 'ASC')
-		     ->get();
-
-		$result = $query->result();
-
-		return $result;
-	}
-
 	/*
 	/ @param $message - chat
 	/
@@ -62,6 +47,23 @@ class M_chat extends CI_Model {
         $this->db->update('message', $message);
 
     }
+
+    public function getAllRoomMessagesByUsers($roomId, $users)
+	{
+		$query = $this->db
+		     ->select( '*' )
+		     ->from( 'message')
+		     ->where( 'room_id', $roomId )
+		     ->where_in( 'user', $users )
+		     ->join('user', 'user.id = message.user', 'left')
+		     ->order_by('created_at', 'ASC')
+		     ->get();
+
+		$result = $query->result();
+
+		return $result;
+	}
+
 
 
     function delete($id){

@@ -19,6 +19,9 @@ class Migration_Chat_room_members extends CI_Migration {
 			'member' => array(
 				'type' => 'BIGINT',
 			),
+			'is_member_removed' => array(
+				'type' => 'BIGINT',
+			),
 			'created_at' => array(
 				'type' => 'DATETIME',
 			),

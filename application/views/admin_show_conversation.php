@@ -9,6 +9,81 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+  <style type="text/css">
+    .chat
+    {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .chat li
+    {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px dotted #B3A9A9;
+    }
+
+    .chat li.left .chat-body
+    {
+        margin-left: 60px;
+    }
+
+    .chat li.right .chat-body
+    {
+        margin-right: 60px;
+    }
+
+
+    .chat li .chat-body p
+    {
+        margin: 0;
+        color: #777777;
+    }
+
+    .panel .slidedown .glyphicon, .chat .glyphicon
+    {
+        margin-right: 5px;
+    }
+
+    .panel-body
+    {
+        overflow-y: scroll;
+        height: 250px;
+    }
+
+    ::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar
+    {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
+      .btn-circle {
+        width: 10px;
+        height: 10px;
+        text-align: center;
+        padding: 3px 0;
+        font-size: 8px;
+        line-height: 1.428571429;
+        border-radius: 50px;
+        float: right;
+      }
+      #radioBtn .notActive{
+          /*color: #3276b1;*/
+          background-color: #fff;
+      }
+  </style>
 </head>
 <body>
 
@@ -18,6 +93,7 @@
   $userIds = $conversation[$roomId]['room-users-user-id'];
 
   $messages = $getAllUserMessage($userIds);
+  
 ?>
 
   <br/>
@@ -28,32 +104,41 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <span class="glyphicon glyphicon-comment"></span><?php echo $room->name ?>
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </button>
-                        <ul class="dropdown-menu slidedown">
-                        </ul>
-                    </div>
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;<?php echo $room->name ?>
                 </div>
                 <div class="panel-body" style="height:500px;">
                     <ul class="chat">
 
                         <?php foreach ($messages as $message) : ?>
-                          <li class="left clearfix"><span class="chat-img pull-left">
-                              <img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" />
-                          </span>
-                              <div class="chat-body clearfix">
-                                  <div class="header">
-                                      <strong class="primary-font">User <?php echo $message->user?></strong> <small class="pull-right text-muted">
-                                          <span class="glyphicon glyphicon-time"></span><?php echo date('F d H:i',strtotime($message->created_at));?></small>
-                                  </div>
-                                  <p>
-                                      <?=$message->message?>
-                                  </p>
-                              </div>
-                          </li>
+                          <?php if ($loggedInUserId == $message->user): ?>
+                            <li class="right clearfix"><span class="chat-img pull-right">
+                                <img style = "height: 50px;" src="<?php echo $message->profile_image ?>" alt="User Avatar" class="img-circle" />
+                            </span>
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <small class=" text-muted"><span class="glyphicon glyphicon-time"></span><?php echo date('F d H:i',strtotime($message->created_at));?></small>
+                                        <strong class="pull-right primary-font"><?php echo $message->fullname ?></strong>
+                                    </div>
+                                    <p>
+                                        <?=$message->message?>
+                                    </p>
+                                </div>
+                            </li>
+                          <?php else: ?>
+                            <li class="left clearfix"><span class="chat-img pull-left">
+                                <img style = "height: 50px;" src="<?php echo $message->profile_image ?>" alt="User Avatar" class="img-circle" />
+                            </span>
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        <strong class="primary-font"><?php echo $message->fullname ?></strong> <small class="pull-right text-muted">
+                                            <span class="glyphicon glyphicon-time"></span><?php echo date('F d H:i',strtotime($message->created_at));?></small>
+                                    </div>
+                                    <p>
+                                        <?=$message->message?>
+                                    </p>
+                                </div>
+                            </li>
+                          <?php endif ?>
                         <?php endforeach; ?>
 
                     </ul>

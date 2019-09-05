@@ -14,6 +14,10 @@ class User extends CI_Controller {
 	{
 		$data['chat_room'] = $roomId;
 		$data['member'] = $userId;
+		$data['is_member_removed'] = false;
+		$date = date('Y-m-d H:i:s');
+		$data['created_at'] = $date;
+		$data['updated_at'] = $date;
 		
 		$this->m_chat_room->addChatRoomMember($data);
 

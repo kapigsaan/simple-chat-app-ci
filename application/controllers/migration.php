@@ -8,7 +8,7 @@ class Migration extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function index($id = 2)
+	public function index($id = 7)
 	{
 
         $this->load->library('migration');

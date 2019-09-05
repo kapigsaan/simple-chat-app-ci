@@ -96,7 +96,7 @@
       float: right;
     }
     #radioBtn .notActive{
-        color: #3276b1;
+        /*color: #3276b1;*/
         background-color: #fff;
     }
 </style>
@@ -112,10 +112,13 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class = "glyphicon glyphicon-user"> </span> Profile <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class = "glyphicon glyphicon-user"> </span>  <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li>
-                <a href="#" class="btn btn-default">
+                <a href="<?php echo site_url('login/profile')?>" >
+                  <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile
+                </a>
+                <a href="<?php echo site_url('login/logout')?>" >
                   <span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout
                 </a>
             </li>
@@ -129,6 +132,10 @@
 </nav>
 
 <div class="container">
+	<?php 
+		$roomOwner = $checkIfRoomOwner($loggedInUserId);
+		$roomMember = $checkIfRoomMember($loggedInUserId);
+	?>
     <hr/>
     <div class="row">
         <div class = "col-md-3 text-left">
@@ -145,8 +152,8 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <div id="radioBtn" class="btn-group">
-                                            <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="public">Public</a>
-                                            <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="private">Private</a>
+                                            <a class="btn btn-default btn-sm active" data-toggle="happy" data-title="public">Public</a>
+                                            <a class="btn btn-default btn-sm notActive" data-toggle="happy" data-title="private">Private</a>
                                         </div>
                                         <input type="hidden" name="happy" id="happy" value="public">
                                     </div>
@@ -168,66 +175,119 @@
                         <?php 
                             $room = $v['room'];
                             $member = $v['room-members'];
+                            $isMember = $checkIfMemberInRoom($room->status, $room->id);
                         ?>
-                        <div class="panel panel-default">
-                            <div class="panel-heading" role="tab" id="heading<?php echo $room->id?>">
-                              <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $room->id?>" aria-expanded="false" aria-controls="collapse<?php echo $room->id?>">
-                                  <?php echo $room->name ?>
-                                </a>
+                        <?php if ($isMember): ?>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading<?php echo $room->id?>">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $room->id?>" aria-expanded="false" aria-controls="collapse<?php echo $room->id?>">
+                                    <?php echo $room->name ?> - (<?php echo $room->status?>)
+                                  </a>
 
-                                <a href = "<?php echo site_url('welcome/index/'.$room->id) ?>" style = "float: right">
-                                    <span class = "glyphicon glyphicon-share-alt"></span>
-                                </a>
-                              </h4>
-                            </div>
-                            <div id="collapse<?php echo $room->id?>" class="panel-collapse collapse 
-                                <?php if ($activeRoomId == $room->id): ?>
-                                    in
-                                <?php endif ?>" role="tabpanel" aria-labelledby="heading<?php echo $room->id?>">
-                              <div class="panel-body">
-                                <?php if ($member): ?>
-                                    <?php foreach ($member as $y => $e):?>
-                                        <div class="btn-group pull-left">
-                                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                            <span class="glyphicon glyphicon-chevron-down"></span>
-                                        </button>
-                                        <ul class="dropdown-menu slidedown">
-                                            <li>
-                                                <a href="<?php echo site_url('welcome/kickMember/'.$e->userId.'/'.$room->id)?>" >
-                                                  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Kick Member
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <p><?php echo $e->username ?> &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
-                                    <?php endforeach; ?>
-                                <?php endif ?>
+                                  <a href = "<?php echo site_url('welcome/index/'.encode_url($room->id)) ?>" style = "float: right">
+                                      <span class = "glyphicon glyphicon-share-alt"></span>
+                                  </a>
+                                </h4>
                               </div>
-                            </div>
-                        </div>
+                              <div id="collapse<?php echo $room->id?>" class="panel-collapse collapse 
+                                  <?php if ($activeRoomId == $room->id): ?>
+                                      in
+                                  <?php endif ?>" role="tabpanel" aria-labelledby="heading<?php echo $room->id?>">
+                                <div class="panel-body">
+                                  <?php if ($member): ?>
+                                      <?php foreach ($member as $y => $e):?>
+                                          <div class="btn-group pull-left">
+                                          <?php if ($e->userId != $room->owner ): ?>
+                                          	<?php if ($loggedInUserId == $room->owner): ?>
+	                                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+	                                                <span class="glyphicon glyphicon-chevron-down"></span>
+	                                            </button>
+	                                            <ul class="dropdown-menu slidedown">
+	                                                <li>
+	                                                    <a href="<?php echo site_url('welcome/kickMember/'.$e->userId.'/'.$room->id)?>" >
+	                                                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+	                                                      	Kick Member
+	                                                    </a>
+	                                                </li>
+	                                            </ul>
+	                                            <?php elseif ($loggedInUserId == $e->userId): ?>
+	                                            	<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+	                                                <span class="glyphicon glyphicon-chevron-down"></span>
+	                                            </button>
+	                                            <ul class="dropdown-menu slidedown">
+	                                                <li>
+	                                                    <a href="<?php echo site_url('welcome/kickMember/'.$e->userId.'/'.$room->id)?>" >
+	                                                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+	                                                      	Leave Room
+	                                                    </a>
+	                                                </li>
+	                                            </ul>
+	                                          <?php endif ?>
+                                          <?php endif ?>
+                                      </div>
+                                      <p>&nbsp;&nbsp;<?php echo $e->fullname ?> &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
+                                      <?php endforeach; ?>
+                                  <?php endif ?>
+                                </div>
+                              </div>
+                          </div>
+                        <?php endif ?>
                     <?php endforeach; ?>
                 <?php endif ?>
 
             </div>
+
+            <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                      <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                          Private
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body">
+                        <p>&nbsp;&nbsp; Test 1 &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
+                      </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                      <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Public
+                        </a>
+                      </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                      <div class="panel-body">
+                        <p>&nbsp;&nbsp; Test 1 &nbsp;<button type="button" class="btn btn-success btn-circle"></button></p>
+                      </div>
+                    </div>
+                </div>
+            </div> -->
 
 
         </div>
         <div class="col-md-9">
             <div class="panel panel-default" <?php if (!$activeRoom) { echo 'hidden';} ?> >
                 <div class="panel-heading">
-                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <span class="glyphicon glyphicon-comment"></span> <?php if ($activeRoom) { echo $activeRoom->name; } ?>
                     <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                            <span class="glyphicon glyphicon-chevron-down"></span>
-                        </button>
-                        <ul class="dropdown-menu slidedown">
-                            <li>
-                                <a href="#" data-toggle="modal" data-target=".bs-example-modal-md" >
-                                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add member
-                                </a>
-                            </li>
-                        </ul>
+                    	<?php if ($roomOwner): ?>
+                    		<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+	                            <span class="glyphicon glyphicon-chevron-down"></span>
+	                        </button>
+	                        <ul class="dropdown-menu slidedown">
+	                            <li>
+	                                <a href="#" data-toggle="modal" data-target=".bs-example-modal-md" >
+	                                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add member
+	                                </a>
+	                            </li>
+	                        </ul>
+                    	<?php endif ?>
                     </div>
                 </div>
                 <div id = "panel-body-1" class="panel-body" style="height:350px;">
@@ -237,20 +297,20 @@
 
                 </div>
 
-                <div class="panel-footer">
-                        <div class="">
-                            <form>
-                                <div class="input-group">
-                                   <input id="btn-input" type="text" class="message form-control" name = "message" placeholder="Type your message here..."/>
-                                   <span class="input-group-btn">
-                                        <input class = "btn btn-default btn-md sendMessage" id="btn-chat" type="submit" name="Send" value="Send" />
-                                   </span>
-                                </div>
-                            </form>
-
-                        </div>
-                    
-                </div>
+                <?php if ($roomMember): ?>
+                	<div class="panel-footer">
+	                    <div class="">
+	                        <form>
+	                            <div class="input-group">
+	                               <input id="btn-input" type="text" class="message form-control" name = "message" placeholder="Type your message here..."/>
+	                               <span class="input-group-btn">
+	                                    <input class = "btn btn-default btn-md sendMessage" id="btn-chat" type="submit" name="Send" value="Send" />
+	                               </span>
+	                            </div>
+	                        </form>
+	                    </div>
+	                </div>
+                <?php endif ?>
             </div>
         </div>
 
@@ -295,7 +355,7 @@
                 <tbody>
                     <?php foreach ($availableUser as $user) : ?>
                         <tr>
-                            <td><?php echo $user->username ?> </td>
+                            <td><?php echo $user->fullname ?> </td>
                             <td><a href="<?php echo site_url('user/addUserToRoom/'.$user->id).'/'.$activeRoomId ?>" class = "btn btn-default"><span class = "glyphicon glyphicon-plus"></span>add</a></td>
                         </tr>
                     <?php endforeach; ?>
@@ -338,7 +398,7 @@
                 console.log(status);
                 console.log(xhr);
                console.log(arguments);
-               alert('request failed');
+               // alert('request failed');
             }
         });
         
@@ -349,7 +409,7 @@
     $(".sendMessage").on('click', function(e){
             e.preventDefault();
             var message = $(".message").val();
-            var html = '<li class="left clearfix"><span class="chat-img pull-left"><img src="http://placehold.it/50/55C1E7/fff&text=U" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">User</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>12 mins ago</small></div><p>'+message+'.</p></div></li>';
+            var html = '<li class="right clearfix"><span class="chat-img pull-right"><img style = "height:50px;" src="<?php echo $picture ?>" alt="User Avatar" class="img-circle" /></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font"><?php echo $fullname ?></strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span>Just Now</small></div><p>'+message+'.</p></div></li>';
 
             if (message != '')
             {
@@ -358,7 +418,7 @@
 
                  $.ajax({
                      type: "POST",
-                     url: "<?php echo site_url('welcome/createMessage/1/'.$activeRoomId) ?>",
+                     url: "<?php echo site_url('welcome/createMessage/'.$activeRoomId) ?>",
                      dataType: 'json',
                      data: {message: message},
                      success:function(data){
@@ -370,7 +430,7 @@
                         console.log(status);
                         console.log(xhr);
                        console.log(arguments);
-                       alert('request failed');
+                       // location.reload();
                     }
                 });
 
